@@ -1,4 +1,4 @@
-# caesar_verschl-sselung
+# CaesarVerschluesselung
 Jeder Buchstabe des Textes wird durch genau einen anderen Buchstaben des Alphabets ersetzt.
 
 Verschiebung: 1
