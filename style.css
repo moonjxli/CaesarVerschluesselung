@@ -43,6 +43,14 @@ h1 {
     font-size: 33px;
 }
 
+#verschlüsselung:focus {
+    outline: none;
+}
+
+#original:focus {
+    outline: none;
+}
+
 .original, .verschlüsselung, .verschiebung {
     display: flex;
     flex-direction: column;
@@ -69,6 +77,10 @@ h1 {
     font-size: 40px;
     font-weight: bold;
     margin-bottom: 20px;
+}
+
+#verschiebung:focus {
+    outline: none;
 }
 
 input[type=number] {

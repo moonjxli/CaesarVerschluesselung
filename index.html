@@ -38,7 +38,7 @@
 
                 <div class="verschlüsselung">
                     <label for="verschlüsselung"> <b> Verschlüsselung </b> </label>
-                    <textarea id="verschlüsselung" rows="5" cols="40"></textarea>
+                    <textarea readonly id="verschlüsselung" rows="5" cols="40"></textarea>
                 </div>
                 
             </div>
@@ -50,7 +50,7 @@
         
         function umwandeln() {
             const original = document.getElementById("original");
-            const verschiebung = (parseInt(document.getElementById("verschiebung").value)%25);
+            const verschiebung = (parseInt(document.getElementById("verschiebung").value));
             const verschlüsselung = document.getElementById("verschlüsselung");
             const encode = document.getElementById("encode");
 
@@ -72,8 +72,16 @@
 
                     v_ascii = ascii;
                     
-                } else {
-                    v_ascii = ascii + verschiebung;
+                } else if (ascii >= 65 && ascii <= 90) {
+
+                    v_ascii = 65 + ((ascii - 65 + verschiebung) % 26);
+
+                    console.log(v_ascii);
+                    
+                } else if (ascii >= 97 && ascii <= 122) {
+           
+                    v_ascii = 97 + ((ascii - 97 + verschiebung) % 26);
+
                     console.log(v_ascii);
                 }
 
