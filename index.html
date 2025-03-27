@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Caesar Verschlüsselung</title>
+
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="main-container">
+            <div class="eins"></div>
+
+            <div class="main">
+
+                <h1> Caesar Verschlüsselung </h1>
+
+                <br>
+
+                <div class="original">
+                    <label for="original"> <b> Original </b>  </label>
+                    <textarea id="original" rows="5" cols="40"></textarea>
+                </div>
+
+                <br>
+                
+                <div id="mitte">
+                    <div class="verschiebung">
+                        <label for="verschiebung"> <b> Verschiebung </b> </label>
+                        <input type="number" id="verschiebung">
+                    </div>
+                    
+                    <button onclick="umwandeln()" id="encode"> encode </button>    
+                </div>
+
+                <br>
+
+                <div class="verschlüsselung">
+                    <label for="verschlüsselung"> <b> Verschlüsselung </b> </label>
+                    <textarea id="verschlüsselung" rows="5" cols="40"></textarea>
+                </div>
+                
+            </div>
+
+            <div class="zwei"></div>
+    </div>
+    
+    <script>
+        
+        function umwandeln() {
+            const original = document.getElementById("original");
+            const verschiebung = (parseInt(document.getElementById("verschiebung").value)%25);
+            const verschlüsselung = document.getElementById("verschlüsselung");
+            const encode = document.getElementById("encode");
+
+            let o_text = original.value;
+
+            const split = o_text.split("");
+
+            console.log(split);
+
+            let y = "";
+
+            for(i=0 ; i < split.length ; i++) {
+                let ascii = split[i].charCodeAt(0);
+
+                let v_ascii = ascii;
+
+                if(ascii === 32) {
+                    console.log("Leer");
+
+                    v_ascii = ascii;
+                    
+                } else {
+                    v_ascii = ascii + verschiebung;
+                    console.log(v_ascii);
+                }
+
+                let va_buchstaben = String.fromCharCode(v_ascii);
+
+                y += va_buchstaben;
+            }
+            verschlüsselung.value = y;
+        }
+        
+    </script>
+</body>
+</html>
