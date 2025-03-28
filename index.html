@@ -74,13 +74,52 @@
                     
                 } else if (ascii >= 65 && ascii <= 90) {
 
-                    v_ascii = 65 + ((ascii - 65 + verschiebung) % 26);
+                    /*                    ( Verschiebung )
+                        Bsp.:         
+                                      65 (A) - 65 = 0. Buchstabe
+                                                + verschiebung
+                                       A -> C   (+2)
+                                        0 (A) + 2 (Verschiebung) = 2 (C)
+                                    
+                                    Modulo:
+                                    nach Z muss wieder A kommen (Beim Fall von einer Verschiebung)
+
+                                    90 (Z) - 65 = 25. Buchstabe
+                                     angenommen: Ohne Modulo:
+                                      25 + verschiebung (!0) = ergebnis > 25 (geht nicht)
+                                      Ergebnis wäre viel zu hoch um es dann mit 65 zu addieren
+                                      (A->Z = 65->90)
+                                      Anderes ASCII Zeichen würde erscheinen (...und das wollen wir nicht)
+
+                                    Lösung: Modulo
+                                    65 + ((90 (ASCII Z) - 65 + 1) % 26)
+                                    65 + ((25 (Z) + 1) % 26)
+                                    65 + ((26 (Kein Buchstabe mehr) ) % 26)
+                                    65 + (0) (eigentliche Verschiebung)
+                                    65 = ASCII A
+                                    Z -> A
+
+                                    Anderes Bsp.:
+                                    Verschiebung von 10
+                                    65 + ((90 - 65 + 10) % 26)
+                                    65 + ((25 + 10) % 26)
+                                    65 + ((35) % 26)
+                                    65 + (9)
+                                    74 = ASCII J
+
+                                    Nachtrag:
+                                    In Javascript wird der Modulo Operator bei negativen Zahlen komisch (-1 % 26)
+                                    ein negatives Ergebnis erscheint
+                                    um das zu vermeiden: zu der Rechnung, den Modulo Wert darauf addieren
+                    */    
+
+                    v_ascii = 65 + ((ascii - 65 + verschiebung +26) % 26);
 
                     console.log(v_ascii);
                     
                 } else if (ascii >= 97 && ascii <= 122) {
            
-                    v_ascii = 97 + ((ascii - 97 + verschiebung) % 26);
+                    v_ascii = 97 + ((ascii - 97 + verschiebung +26) % 26);
 
                     console.log(v_ascii);
                 }
