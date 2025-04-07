@@ -60,7 +60,7 @@
 
             console.log(split);
 
-            let y = "";
+            let output = "";
 
             for(i=0 ; i < split.length ; i++) {
                 let ascii = split[i].charCodeAt(0);
@@ -71,27 +71,33 @@
                     console.log("Leer");
 
                     v_ascii = ascii;
-                    
+                //} else if ((ascii == 0) <= 64 || (ascii == 91) <= 96 || (ascii == 123) <= 255) {
+                    //alert("EY");  
                 } else if (ascii >= 65 && ascii <= 90) {
 
-                    /*                    ( Verschiebung )
-                        Bsp.:         
+                    /*                    ( positive Verschiebung )
+                        Bsp.:       
+                                    "Index" herausfinden von den Buchstaben
                                       65 (A) - 65 = 0. Buchstabe
                                                 + verschiebung
                                        A -> C   (+2)
                                         0 (A) + 2 (Verschiebung) = 2 (C)
                                     
-                                    Modulo:
+                                    Was muss passieren:
                                     nach Z muss wieder A kommen (Beim Fall von einer Verschiebung)
+                                    Kreis / Rad
 
                                     90 (Z) - 65 = 25. Buchstabe
+
                                      angenommen: Ohne Modulo:
-                                      25 + verschiebung (!0) = ergebnis > 25 (geht nicht)
+                                      25 + verschiebung (!0) = ergebnis > 25 (geht nicht, muss man vermeiden!)
                                       Ergebnis wäre viel zu hoch um es dann mit 65 zu addieren
                                       (A->Z = 65->90)
                                       Anderes ASCII Zeichen würde erscheinen (...und das wollen wir nicht)
 
                                     Lösung: Modulo
+                                    ergebnis % 26 (0-25) = neues Ergebnis bleibt nun innerhalb von 0-25
+
                                     65 + ((90 (ASCII Z) - 65 + 1) % 26)
                                     65 + ((25 (Z) + 1) % 26)
                                     65 + ((26 (Kein Buchstabe mehr) ) % 26)
@@ -107,28 +113,61 @@
                                     65 + (9)
                                     74 = ASCII J
 
-                                    Nachtrag:
-                                    In Javascript wird der Modulo Operator bei negativen Zahlen komisch (-1 % 26)
-                                    ein negatives Ergebnis erscheint
-                                    um das zu vermeiden: zu der Rechnung, den Modulo Wert darauf addieren
+                                    Nachtrag - 1 (Negative Werte ins Unendliche):
+                                    In Javascript wird der Modulo Operator bei hohen negativen Zahlen komisch
+                                    ein negatives Ergebnis erscheint???
+
+                                    EIGENTLICH:
+                                    -1000 % 26 = 14
+
+                                    ABER IN JAVASCRIPT:
+                                    -1000 % 26 = -12 ??????
+                                    
+                                    Nachtrag - 2:
+                                    Definition von Modulo - mathematisch:
+                                    a mod b = Ergebnis
+                                    Dividend mod Divisor = Ergebnis / Rest
+
+                                    Ergebnis muss im Bereich 0 bis b-1 sein WENN b > 0
+                                    => Rest von Modulo ist immer in einem positiven Intervall inkl. 0
+
+                                    -7 % 3 = 2 [0,3]
+
+                                    Einige Programmiersprachen definieren Modulo anders
+                                    -> Wenn der Dividend negativ ist, ist das Ergebnis auch negativ...
+
+                                    -7 % 3 = -1
+
+                                    Um das zu vermeiden... + (Divisor)
+
+
+                                    1000 % 26
+                                    26,52,78,104,..., *38 = 988
+                                    Rest: 12
+
+                                    -1000 % 26
+                                    -38*26 = -988
+                                    -39*26 = -1.014 Rest (+14)
+
+                                    ES KLAPPT!!
                     */    
 
-                    v_ascii = 65 + ((ascii - 65 + verschiebung +26) % 26);
+                    v_ascii = 65 + ((ascii - 65 + verschiebung % 26 + 26) % 26);
 
                     console.log(v_ascii);
                     
                 } else if (ascii >= 97 && ascii <= 122) {
            
-                    v_ascii = 97 + ((ascii - 97 + verschiebung +26) % 26);
+                    v_ascii = 97 + ((ascii - 97 + verschiebung % 26 + 26) % 26);
 
                     console.log(v_ascii);
                 }
 
                 let va_buchstaben = String.fromCharCode(v_ascii);
 
-                y += va_buchstaben;
+                output += va_buchstaben;
             }
-            verschlüsselung.value = y;
+            verschlüsselung.value = output;
         }
         
     </script>
